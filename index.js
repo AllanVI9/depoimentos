@@ -7,17 +7,22 @@ var porta = server.porta
 var conexao = bancodedados.conexao
 var documentos = bancodedados.documentos
 
+app.set('view engine',"ejs")
 
-app.set('view engine', 'ejs')
 //abrir o form.ejs
 app.get('/',(req,res)=>{
-    res.render("form")
+    conexao()
+    documentos.find()
+    .then((documentos)=>{
+         console.log(documentos)
+        res.render("form", documentos)
+    })
 })
 
-//gravar as informações do formulário ejs 
+//gravar as informações do formulario form.ejs
 app.post('/gravar',(req,res)=>{
     var dados = req.body
-    
+
     conexao()
 
     new documentos({
