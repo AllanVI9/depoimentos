@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,15 +7,31 @@
     <title>Formulário</title>
 </head>
 <body>
-    <h3>Depoimentos</h3>
+    <h3>documento</h3>
     <form action="/gravar" method="POST">
     <input type="text" name="nome" id="nome" placeholder="Digite seu nome">
     <br>
     <input type="text" name="cargo" id="cargo" placeholder="Digite seu cargo">
     <br>
-    <textarea name="mensagem" id="mensagem" cols="30" rows="10">Digite sua Mensagem</textarea>
+    <textarea name="mensagem" id="mensagem" cols="30" rows="10" placeholder="Digite sua Mensagem"></textarea>
     <br>
     <input type="submit" value="Gravar">
-    </form>
+</form>
+<table>
+    <tr>
+        <th>Nome:</th>
+        <th>Cargo:</th>
+        <th>Mensagem:</th>        
+    </tr>
+ 
+    <% for(var n =0; n<documentos.length; n++){%>
+        <tr>
+            <td><%=documentos[n].nome%></td>
+            <td><%=documentos[n].cargo%></td>
+            <td><%=documentos[n].mensagem%></td>
+        </tr>            
+    <% } %>
+    </table>
+ 
 </body>
 </html>
