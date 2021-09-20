@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,11 +17,12 @@
     <br>
     <input type="submit" value="Gravar">
 </form>
-<table>
+<table border="1">
     <tr>
         <th>Nome:</th>
         <th>Cargo:</th>
-        <th>Mensagem:</th>        
+        <th>Mensagem:</th>   
+        <th>Ações:</th>     
     </tr>
  
     <% for(var n =0; n<documentos.length; n++){%>
@@ -29,9 +30,11 @@
             <td><%=documentos[n].nome%></td>
             <td><%=documentos[n].cargo%></td>
             <td><%=documentos[n].mensagem%></td>
+            <td><a href="/excluir?id=<%=documentos[n].id%>">Excluir</a></td>
         </tr>            
     <% } %>
     </table>
  
+    
 </body>
 </html>
