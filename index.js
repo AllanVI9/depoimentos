@@ -14,7 +14,7 @@ var depoimentos = new schema({
 })
 var documentos = mongoose.model('depoimentos',depoimentos)
 //fim das configurações do database
-var porta = process.env.PORT || 3030
+var porta = process.env.PORT || 4040
 // configurações 
 app.set("view engine",'ejs')
 app.use(express.static('./'))
