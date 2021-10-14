@@ -1,37 +1,53 @@
-var express = require('express')
-var app = express()
- 
-//configuração do database com acesso ao mongoDBatlas
-var mongoose = require('mongoose')
-var conexao = ()=>{
-    var caminho = mongoose.connect('mongodb+srv://awesome:ivaAwesome9@fiap.9lwql.mongodb.net/mongoatlas?retryWrites=true&w=majority')
-}
-var schema = mongoose.Schema
-var depoimentos = new schema({
-    nome:String,
-    cargo:String,
-    mensagem:String
-})
-var documentos = mongoose.model('depoimentos', depoimentos)
-// fim das configurações do database
- 
-var porta = process.env.PORT || 4040
- 
-app.set("view engine", "ejs")
- 
-// config
-app.set("view engine", "ejs")
-app.use(express.static('./'))
- 
-//rota para abrir o arquivo index.ejs
-app.get('/',(req, res)=>{
+var server = require("./config/server")
+
+var bancodedados = require('./config/bancodedados')
+
+var app = server.app
+var porta = server.porta
+
+var conexao = bancodedados.conexao
+var documentos = bancodedados.documentos
+
+app.set('view engine', "ejs")
+
+//abrir o forms.ejs
+app.get('/', (req,res)=>{
     conexao()
-    documentos.find().limit(3).sort({'_id':-1})
-    .then((documentos)=>{
-        res.render('index',{documentos})
-    })
+    documentos.find().sort({"_id":-1})
     
+   .then((documentos)=>{
+    console.log(documentos)
+        res.render("form", {documentos})
+    })
 })
- 
-// ligar o servidor
+
+//gravar as informações do formulário form.ejs
+app.post('/gravar',(req,res)=>{
+
+    var dados = req.body
+    conexao()
+
+    new documentos({
+        mensagem:dados.mensagem,
+        nome:dados.nome,
+        cargo:dados.cargo
+
+    }).save()
+    //res.send('informações enviadas!')
+    .then((documentos)=>{
+    res.redirect('/')
+    })
+})
+
+//excluir uma mensagem
+app.get('/excluir',(req,res)=>{
+    var id= req.query.id
+    conexao()
+    documentos.findOneAndRemove({_id:id})
+    .then((documentos)=>{
+
+    res.redirect('/')
+    })
+})
+
 app.listen(porta)
